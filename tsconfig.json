@@ -17,6 +17,7 @@
 		"paths": {
 			/* Imports like '@components/App' */
 			"@api/*": ["./src/api/*"],
+			"@services/*": ["./src/api/services/*"],
 			"@assets/*": ["./src/assets/*"],
 			"@components/*": ["./src/components/*"],
 			"@constants/*": ["./src/constants/*"],
