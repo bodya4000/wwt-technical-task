@@ -1,15 +1,15 @@
-import { FilterItemsResponseData } from '@api/types/Filter'
+import { FilterItemsData } from '@api/types/Filter'
 
 class FilterDataService {
 	private readonly URL = '../'
 	private readonly ENDPOINT = 'src/temp/filterData.json'
 
-	async fetchFilterData(): Promise<FilterItemsResponseData> {
+	async fetchFilterData(): Promise<FilterItemsData> {
 		const response = await fetch(`${this.URL}${this.ENDPOINT}`)
 		if (!response.ok) {
 			throw new Error('Failed to fetch filter data')
 		}
-		const data: FilterItemsResponseData = await response.json()
+		const data: FilterItemsData = await response.json()
 		return data
 	}
 }

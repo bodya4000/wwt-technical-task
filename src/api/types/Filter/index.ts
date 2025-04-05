@@ -1,6 +1,6 @@
 export type { FilterBase } from './FilterBase'
 export type { FilterChooseOption } from './FilterChooseOption'
 export type { FilterItem } from './FilterItem'
-export type { FilterItemsResponseData } from './FilterItemsResponseData'
+export type { FilterItemsData } from './FilterItemsData'
 export { FilterType } from './FilterType'
 export type { FilterChoose } from './FilterVariants'

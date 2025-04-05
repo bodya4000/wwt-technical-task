@@ -1,5 +1,5 @@
 import { FilterChoose } from './FilterVariants'
 
-export type FilterItemsResponseData = {
+export type FilterItemsData = {
 	filterItems: FilterChoose[]
 }
