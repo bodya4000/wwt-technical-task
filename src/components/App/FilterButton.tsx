@@ -1,8 +1,12 @@
 import { useTranslation } from 'react-i18next'
 
-import { Box, Button } from '@chakra-ui/react'
+import { Box, ButtonProps } from '@chakra-ui/react'
 
-const FilterButton = () => {
+import { PrimaryButton } from '@components/common'
+
+interface Props extends ButtonProps {}
+
+const FilterButton = (props: Props) => {
 	const { t } = useTranslation('filter')
 
 	return (
@@ -11,13 +15,11 @@ const FilterButton = () => {
 			flexDirection={'row'}
 			flex={1}
 		>
-			<Button
+			<PrimaryButton
 				flex={1}
-				colorScheme="brand"
-				padding={4}
-			>
-				{t('filters')}
-			</Button>
+				title={t('filters')}
+				{...props}
+			/>
 		</Box>
 	)
 }

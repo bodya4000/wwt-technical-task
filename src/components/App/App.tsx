@@ -1,15 +1,17 @@
+import { useState } from 'react'
+
 import { Box } from '@chakra-ui/react'
 
-import useFilterData from '@/hooks/useFilterData'
+import { FilterItemsData } from '@api/types/Filter'
 
-import FilterButton from './FilterButton'
-import UserDataView from './UserDataView'
+import { FilterButton, FilterModal, UserDataView } from '.'
 
 export const App = () => {
-	// const [usersFilters, setUserFilters] = useState<FilterItemsData>({
-	// 	filterItems: []
-	// })
-	const { data } = useFilterData()
+	const [usersFilters] = useState<FilterItemsData>({
+		filterItems: []
+	})
+
+	const [filterModal, setFilterModal] = useState(false)
 
 	return (
 		<Box
@@ -20,16 +22,20 @@ export const App = () => {
 			flexDirection={['column', 'row', 'row']}
 			gap={[4, 8, 12]}
 		>
-			<UserDataView data={data} />
-
+			<UserDataView data={usersFilters} />
 			<Box
 				flex={1}
 				display={'flex'}
 				justifyContent={'center'}
 				alignItems={'center'}
 			>
-				<FilterButton />
+				<FilterButton onClick={() => setFilterModal(!filterModal)} />
 			</Box>
+
+			<FilterModal
+				isOpen={filterModal}
+				onClose={() => setFilterModal(false)}
+			/>
 		</Box>
 	)
 }

@@ -42,12 +42,34 @@ const mdSize = definePartsStyle({
 	}
 })
 
+const smSize = definePartsStyle({
+	control: {
+		w: '1rem',
+		h: '1rem'
+	},
+	icon: {
+		fontSize: '0.5rem'
+	}
+})
+
+const xsSize = definePartsStyle({
+	control: {
+		w: '0.7rem',
+		h: '0.7rem'
+	},
+	icon: {
+		fontSize: '0.3rem'
+	}
+})
+
 export const checkboxTheme = defineMultiStyleConfig({
 	baseStyle,
 	defaultProps: {
 		size: 'md'
 	},
 	sizes: {
-		md: mdSize
+		md: mdSize,
+		sm: smSize,
+		xs: xsSize
 	}
 })

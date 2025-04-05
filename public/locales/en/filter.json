@@ -1,3 +1,6 @@
 {
-	"filters": "Filters"
+	"filters": "Filters",
+	"filter": "Filter",
+	"apply": "Apply",
+	"clear_filters": "Clear all parameters"
 }
