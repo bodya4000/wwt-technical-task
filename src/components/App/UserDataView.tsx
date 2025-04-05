@@ -1,9 +1,9 @@
 import { Code } from '@chakra-ui/react'
 
-import { FilterItemsData } from '@api/types/Filter'
+import { FilterChoose } from '@api/types/Filter'
 
 type Props = {
-	data: FilterItemsData | undefined
+	data: FilterChoose[] | undefined
 }
 
 const UserDataView = ({ data }: Props) => {
