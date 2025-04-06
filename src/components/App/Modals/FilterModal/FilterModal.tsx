@@ -1,28 +1,33 @@
+import { FieldValues, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import {
-	Link,
 	Modal,
-	ModalBody,
 	ModalCloseButton,
 	ModalContent,
-	ModalFooter,
 	ModalHeader,
 	ModalOverlay
 } from '@chakra-ui/react'
 
 import useFilterData from '@/hooks/useFilterData'
 
-import { ApplyButton, FilterModalSection } from '.'
+import { FilterModalBody, FilterModalFooter } from '.'
 
 type Props = {
 	isOpen: boolean
 	onClose: () => void
 }
 
+type FilterFormData = Record<string, Record<string, boolean>>
+
 export const FilterModal = ({ isOpen, onClose }: Props) => {
 	const { t } = useTranslation('filter')
 	const { data, isLoading } = useFilterData()
+	const { control, handleSubmit } = useForm<FilterFormData>()
+
+	const onPress = (data: FieldValues) => {
+		console.log(data)
+	}
 	return (
 		<Modal
 			isOpen={isOpen}
@@ -39,39 +44,16 @@ export const FilterModal = ({ isOpen, onClose }: Props) => {
 				overflowX="hidden"
 			>
 				<ModalHeader>{t('filter')}</ModalHeader>
+
 				<ModalCloseButton _focus={{ boxShadow: 'none' }} />
 
-				<ModalBody flex={1}>
-					{isLoading
-						? Array.from({ length: 5 }).map((_, i) => (
-								<FilterModalSection
-									key={i}
-									isLoading
-								/>
-							))
-						: data?.filterItems.map(section => (
-								<FilterModalSection
-									key={section.id}
-									title={section.name}
-									options={section.options}
-								/>
-							))}
-				</ModalBody>
+				<FilterModalBody
+					control={control}
+					data={data}
+					isLoading={isLoading}
+				/>
 
-				<ModalFooter
-					justifyContent={['space-between', 'space-between', 'center']}
-					position={'relative'}
-					gap={4}
-				>
-					<ApplyButton onClick={onClose}>{t('apply')}</ApplyButton>
-					<Link
-						position={['relative', 'absolute', 'absolute']}
-						right={'0'}
-						fontSize={['xs', 12, 'sm']}
-					>
-						{t('clear_filters')}
-					</Link>
-				</ModalFooter>
+				<FilterModalFooter submit={handleSubmit(onPress)} />
 			</ModalContent>
 		</Modal>
 	)

@@ -1,23 +1,28 @@
-import {
-	Box,
-	Checkbox,
-	Grid,
-	Heading,
-	Skeleton,
-	VStack
-} from '@chakra-ui/react'
+import { Control, FieldValues } from 'react-hook-form'
+
+import { Grid, Heading, VStack } from '@chakra-ui/react'
 
 import { FilterChooseOption } from '@api/types/Filter'
 
-import { colors } from '@providers/ThemeProvider/theme/base'
+import { FilterModalFormOption } from '.'
 
 type Props = {
+	sectionId: string
 	title?: string
 	options?: FilterChooseOption[]
-	isLoading?: boolean
+	formLoaded?: boolean
+	control: Control<FieldValues>
 }
 
-const FilterModalSection = ({ title, options = [], isLoading }: Props) => {
+const FilterModalSection = ({
+	sectionId,
+	control,
+	title,
+	options = [],
+	formLoaded
+}: Props) => {
+	console.log(formLoaded)
+
 	return (
 		<VStack
 			align="start"
@@ -32,14 +37,7 @@ const FilterModalSection = ({ title, options = [], isLoading }: Props) => {
 				fontSize={['xs', 'md', 'xl']}
 				fontWeight={'medium'}
 			>
-				{isLoading ? (
-					<Skeleton
-						height="24px"
-						width="200px"
-					/>
-				) : (
-					title
-				)}
+				{title}
 			</Heading>
 
 			<Grid
@@ -47,30 +45,14 @@ const FilterModalSection = ({ title, options = [], isLoading }: Props) => {
 				templateColumns="repeat(3, 1fr)"
 				gap={4}
 			>
-				{isLoading
-					? Array.from({ length: 4 }).map((_, i) => (
-							<Skeleton
-								key={i}
-								height="20px"
-							/>
-						))
-					: options.map((opt, i) => (
-							<Box
-								key={i}
-								fontSize={{ base: '0.7rem', sm: '0.7rem', md: 'sm', lg: 'lg' }}
-								display={'flex'}
-								alignItems={'center'}
-							>
-								<Checkbox
-									borderWidth={[1, 2]}
-									borderColor={colors.black}
-									borderRadius={4}
-									marginRight={[1, 2, 3, 4]}
-									size={['xs', 'sm', 'md']}
-								/>
-								{opt.name}
-							</Box>
-						))}
+				{options.map(opt => (
+					<FilterModalFormOption
+						key={opt.id}
+						opt={opt}
+						sectionId={sectionId}
+						control={control}
+					/>
+				))}
 			</Grid>
 		</VStack>
 	)
