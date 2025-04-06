@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Box, ButtonProps } from '@chakra-ui/react'
@@ -24,4 +25,4 @@ const FilterButton = (props: Props) => {
 	)
 }
 
-export default FilterButton
+export default memo(FilterButton)

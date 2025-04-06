@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ButtonProps } from '@chakra-ui/react'
@@ -18,4 +19,4 @@ const ApplyNewBtn = (props: ButtonProps) => {
 	)
 }
 
-export default ApplyNewBtn
+export default memo(ApplyNewBtn)

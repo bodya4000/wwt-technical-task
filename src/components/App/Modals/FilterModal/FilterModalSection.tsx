@@ -1,6 +1,8 @@
+import { memo } from 'react'
 import { Control } from 'react-hook-form'
 
 import { Grid, Heading, VStack } from '@chakra-ui/react'
+import isEqual from 'lodash.isequal'
 
 import { FilterChooseOption } from '@api/types/Filter'
 
@@ -54,4 +56,10 @@ const FilterModalSection = ({
 		</VStack>
 	)
 }
-export default FilterModalSection
+export default memo(
+	FilterModalSection,
+	(prev, next) =>
+		prev.formLoaded === next.formLoaded &&
+		prev.title === next.title &&
+		isEqual(prev.options, next.options)
+)

@@ -1,6 +1,7 @@
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 
 import { Code } from '@chakra-ui/react'
+import isEqual from 'lodash.isequal'
 
 import { SearchRequestFilter } from '@api/types/SearchRequest/SearchRequestFilter'
 
@@ -35,5 +36,6 @@ const UserDataView = ({ data }: Props) => {
 		</Code>
 	)
 }
-
-export default UserDataView
+export default memo(UserDataView, (prev, next) => {
+	return isEqual(prev.data, next.data)
+})

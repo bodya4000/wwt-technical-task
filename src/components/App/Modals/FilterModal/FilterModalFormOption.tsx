@@ -1,7 +1,8 @@
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import { Control, Controller } from 'react-hook-form'
 
 import { Box, Checkbox } from '@chakra-ui/react'
+import isEqual from 'lodash.isequal'
 
 import { FilterChooseOption } from '@api/types/Filter'
 
@@ -56,4 +57,8 @@ const FilterModalFormOption = ({ opt, control, sectionId }: Props) => {
 	)
 }
 
-export default FilterModalFormOption
+export default memo(
+	FilterModalFormOption,
+	(prev, next) =>
+		prev.sectionId === next.sectionId && isEqual(prev.opt, next.opt)
+)

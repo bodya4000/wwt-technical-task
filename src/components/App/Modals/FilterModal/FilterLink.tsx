@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Link } from '@chakra-ui/react'
@@ -20,4 +21,4 @@ const FilterLink = ({ onClick }: Props) => {
 	)
 }
 
-export default FilterLink
+export default memo(FilterLink)

@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -20,7 +21,7 @@ type Props = {
 	onClose: () => void
 }
 
-export const ConfirmModal = ({ isOpen, onClose }: Props) => {
+const ConfirmModalComponent = ({ isOpen, onClose }: Props) => {
 	const { t } = useTranslation('filter')
 	const { confirmNewUserOptions, notToConfirmNewUserOptions } = useAppState()
 
@@ -66,3 +67,8 @@ export const ConfirmModal = ({ isOpen, onClose }: Props) => {
 		</Modal>
 	)
 }
+
+export const ConfirmModal = memo(
+	ConfirmModalComponent,
+	(prev, next) => prev.isOpen === next.isOpen
+)

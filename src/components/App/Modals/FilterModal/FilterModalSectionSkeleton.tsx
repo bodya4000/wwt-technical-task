@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 import { Grid, Heading, Skeleton, VStack } from '@chakra-ui/react'
 
 const FilterModalSectionSkeleton = () => {
@@ -36,4 +38,4 @@ const FilterModalSectionSkeleton = () => {
 		</VStack>
 	)
 }
-export default FilterModalSectionSkeleton
+export default memo(FilterModalSectionSkeleton)

@@ -1,3 +1,4 @@
+import { memo, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
@@ -10,7 +11,6 @@ import {
 } from '@chakra-ui/react'
 
 import useFilterData from '@/hooks/useFilterData'
-import { FormTransformDataService } from '@/services'
 import useAppState from '@/zustand/store'
 
 import { FilterModalBody, FilterModalFooter } from '.'
@@ -26,20 +26,21 @@ export type FilterFormData = {
 	}
 }
 
-export const FilterModal = ({ isOpen, onClose }: Props) => {
+const FilterModalComponent = ({ isOpen, onClose }: Props) => {
 	const { t } = useTranslation('filter')
 	const { data, isLoading } = useFilterData()
 	const { openConfirmModal } = useAppState()
 	const { control, handleSubmit, reset, getValues } = useForm<FilterFormData>()
 
-	const onPress = (data: FilterFormData) => {
-		console.log(data)
-
-		const transformedData =
-			FormTransformDataService.transformFormDataToSearchRequestFilter(data)
-
-		openConfirmModal(transformedData)
-	}
+	const onPress = useCallback(
+		async (data: FilterFormData) => {
+			const { FormTransformDataService } = await import('@/services')
+			const transformedData =
+				FormTransformDataService.transformFormDataToSearchRequestFilter(data)
+			openConfirmModal(transformedData)
+		},
+		[openConfirmModal]
+	)
 
 	return (
 		<Modal
@@ -80,3 +81,7 @@ export const FilterModal = ({ isOpen, onClose }: Props) => {
 		</Modal>
 	)
 }
+
+export const FilterModal = memo(FilterModalComponent, (prev, next) => {
+	return prev.isOpen === next.isOpen && prev.onClose === next.onClose
+})

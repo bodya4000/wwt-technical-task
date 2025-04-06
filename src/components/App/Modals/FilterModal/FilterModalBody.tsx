@@ -1,6 +1,8 @@
+import { memo } from 'react'
 import { Control } from 'react-hook-form'
 
 import { ModalBody } from '@chakra-ui/react'
+import isEqual from 'lodash.isequal'
 
 import { FilterItemsData } from '@api/types/Filter'
 
@@ -38,4 +40,8 @@ const FilterModalBody = ({ control, data, isLoading }: Props) => {
 	)
 }
 
-export default FilterModalBody
+export default memo(
+	FilterModalBody,
+	(prev, next) =>
+		prev.isLoading === next.isLoading && isEqual(prev.data, next.data)
+)
