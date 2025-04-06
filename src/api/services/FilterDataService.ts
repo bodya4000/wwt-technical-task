@@ -2,7 +2,7 @@ import { FilterItemsData } from '@api/types/Filter'
 
 class FilterDataService {
 	private readonly URL = '../'
-	private readonly ENDPOINT = 'src/temp/filterData.json'
+	private readonly ENDPOINT = 'temp/filterData.json'
 
 	async fetchFilterData(): Promise<FilterItemsData> {
 		const response = await fetch(`${this.URL}${this.ENDPOINT}`)
