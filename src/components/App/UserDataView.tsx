@@ -1,12 +1,21 @@
+import { useMemo } from 'react'
+
 import { Code } from '@chakra-ui/react'
 
-import { FilterChoose } from '@api/types/Filter'
+import { SearchRequestFilter } from '@api/types/SearchRequest/SearchRequestFilter'
 
 type Props = {
-	data: FilterChoose[] | undefined
+	data: SearchRequestFilter | undefined
 }
 
 const UserDataView = ({ data }: Props) => {
+	const dataWithoutEmptyOptions = useMemo(() => {
+		if (!data) {
+			return {}
+		}
+		return data.filter(item => item.optionsIds.length > 0)
+	}, [data])
+
 	return (
 		<Code
 			flex={3}
@@ -22,7 +31,7 @@ const UserDataView = ({ data }: Props) => {
 			border="1px solid"
 			borderColor="gray.700"
 		>
-			{JSON.stringify(data, null, 2)}
+			{JSON.stringify(dataWithoutEmptyOptions, null, 2)}
 		</Code>
 	)
 }

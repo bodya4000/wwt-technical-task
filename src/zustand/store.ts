@@ -1,12 +1,12 @@
 import { create } from 'zustand'
 
-import { FilterChoose } from '@api/types/Filter'
+import { SearchRequestFilter } from '@api/types/SearchRequest/SearchRequestFilter'
 
 interface AppState {
-	usersOptions: FilterChoose[]
+	usersOptions: SearchRequestFilter
 	modalOpen: boolean
 
-	setUserOptions: (options: FilterChoose[]) => void
+	setUserOptions: (options: SearchRequestFilter) => void
 	setModalOpen: (value: boolean) => void
 }
 

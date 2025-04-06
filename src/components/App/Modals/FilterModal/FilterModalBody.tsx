@@ -1,14 +1,18 @@
-import { Control, FieldValues } from 'react-hook-form'
+import { Control } from 'react-hook-form'
 
 import { ModalBody } from '@chakra-ui/react'
 
 import { FilterItemsData } from '@api/types/Filter'
 
-import { FilterModalSection, FilterModalSectionSkeleton } from '.'
+import {
+	FilterFormData,
+	FilterModalSection,
+	FilterModalSectionSkeleton
+} from '.'
 
 interface Props {
 	data: FilterItemsData | undefined
-	control: Control<FieldValues, unknown, FieldValues>
+	control: Control<FilterFormData, unknown, FilterFormData>
 	isLoading: boolean
 }
 

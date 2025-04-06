@@ -1,28 +1,25 @@
-import { Control, FieldValues } from 'react-hook-form'
+import { Control } from 'react-hook-form'
 
 import { Grid, Heading, VStack } from '@chakra-ui/react'
 
 import { FilterChooseOption } from '@api/types/Filter'
 
-import { FilterModalFormOption } from '.'
+import { FilterFormData, FilterModalFormOption } from '.'
 
 type Props = {
 	sectionId: string
 	title?: string
 	options?: FilterChooseOption[]
 	formLoaded?: boolean
-	control: Control<FieldValues>
+	control: Control<FilterFormData>
 }
 
 const FilterModalSection = ({
 	sectionId,
 	control,
 	title,
-	options = [],
-	formLoaded
+	options = []
 }: Props) => {
-	console.log(formLoaded)
-
 	return (
 		<VStack
 			align="start"

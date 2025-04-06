@@ -1,4 +1,4 @@
-import { FieldValues, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -9,7 +9,11 @@ import {
 	ModalOverlay
 } from '@chakra-ui/react'
 
+import { FilterType } from '@api/types/Filter'
+import { SearchRequestFilter } from '@api/types/SearchRequest/SearchRequestFilter'
+
 import useFilterData from '@/hooks/useFilterData'
+import useAppState from '@/zustand/store'
 
 import { FilterModalBody, FilterModalFooter } from '.'
 
@@ -18,15 +22,36 @@ type Props = {
 	onClose: () => void
 }
 
-type FilterFormData = Record<string, Record<string, boolean>>
+export type FilterFormData = {
+	[key: string]: {
+		[optionId: string]: boolean
+	}
+}
 
 export const FilterModal = ({ isOpen, onClose }: Props) => {
 	const { t } = useTranslation('filter')
 	const { data, isLoading } = useFilterData()
+	const { setUserOptions } = useAppState()
 	const { control, handleSubmit } = useForm<FilterFormData>()
 
-	const onPress = (data: FieldValues) => {
-		console.log(data)
+	const onPress = (data: FilterFormData) => {
+		const transformedData: SearchRequestFilter = Object.entries(data).map(
+			([sectionId, options]) => {
+				const optionsIds: string[] = []
+				for (const option in options) {
+					if (options[option]) {
+						optionsIds.push(option)
+					}
+				}
+				return {
+					id: sectionId,
+					optionsIds,
+					type: FilterType.OPTION
+				}
+			}
+		)
+		setUserOptions(transformedData)
+		onClose()
 	}
 	return (
 		<Modal

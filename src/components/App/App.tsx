@@ -6,7 +6,6 @@ import { FilterButton, FilterModal, UserDataView } from '.'
 
 export const App = () => {
 	const { modalOpen, setModalOpen, usersOptions } = useAppState()
-
 	return (
 		<Box
 			minH="100dvh"

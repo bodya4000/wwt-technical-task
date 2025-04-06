@@ -16,7 +16,12 @@ const FilterModalFooter = ({ submit }: Props) => {
 			position={'relative'}
 			gap={4}
 		>
-			<ApplyButton onClick={submit}>{t('apply')}</ApplyButton>
+			<ApplyButton
+				type="submit"
+				onClick={submit}
+			>
+				{t('apply')}
+			</ApplyButton>
 			<FilterLink />
 		</ModalFooter>
 	)

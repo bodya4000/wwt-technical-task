@@ -1,23 +1,32 @@
-import { Control, Controller, FieldValues } from 'react-hook-form'
+import { useMemo } from 'react'
+import { Control, Controller } from 'react-hook-form'
 
 import { Box, Checkbox } from '@chakra-ui/react'
 
 import { FilterChooseOption } from '@api/types/Filter'
 
+import useAppState from '@/zustand/store'
 import { colors } from '@providers/ThemeProvider/theme/base'
+
+import { FilterFormData } from '.'
 
 interface Props {
 	opt: FilterChooseOption
-	control: Control<FieldValues>
+	control: Control<FilterFormData>
 	sectionId: string
 }
 
 const FilterModalFormOption = ({ opt, control, sectionId }: Props) => {
+	const { usersOptions } = useAppState()
+	const inUse = useMemo(
+		() => usersOptions.some(section => section.optionsIds.includes(opt.id)),
+		[usersOptions]
+	)
 	return (
 		<Controller
 			name={`${sectionId}.${opt.id}`}
 			control={control}
-			defaultValue={false}
+			defaultValue={inUse}
 			render={({ field }) => {
 				return (
 					<Box
