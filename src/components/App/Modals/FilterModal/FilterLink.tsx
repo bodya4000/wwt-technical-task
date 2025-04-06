@@ -7,7 +7,7 @@ interface Props {
 }
 
 const FilterLink = ({ onClick }: Props) => {
-	const { t } = useTranslation()
+	const { t } = useTranslation('filter')
 	return (
 		<Link
 			onClick={onClick}

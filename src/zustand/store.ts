@@ -3,19 +3,41 @@ import { create } from 'zustand'
 import { SearchRequestFilter } from '@api/types/SearchRequest/SearchRequestFilter'
 
 interface AppState {
-	usersOptions: SearchRequestFilter
+	oldUsersOptions: SearchRequestFilter
+	newUsersOptions: SearchRequestFilter
 	modalOpen: boolean
+	confirmModal: boolean
 
-	setUserOptions: (options: SearchRequestFilter) => void
-	setModalOpen: (value: boolean) => void
+	openFilterModal: () => void
+	closeFilterModal: () => void
+	openConfirmModal: (newOptions: SearchRequestFilter) => void
+	confirmNewUserOptions: () => void
+	notToConfirmNewUserOptions: () => void
 }
 
-const useAppState = create<AppState>(set => ({
+const useAppState = create<AppState>((set, get) => ({
 	modalOpen: false,
-	usersOptions: [],
-
-	setModalOpen: value => set({ modalOpen: value }),
-	setUserOptions: options => set({ usersOptions: options })
+	confirmModal: false,
+	oldUsersOptions: [],
+	newUsersOptions: [],
+	openFilterModal: () => set({ modalOpen: true }),
+	closeFilterModal: () => set({ modalOpen: false }),
+	openConfirmModal: (newOptions: SearchRequestFilter) =>
+		set({ newUsersOptions: newOptions, modalOpen: false, confirmModal: true }),
+	confirmNewUserOptions: () => {
+		set({
+			newUsersOptions: [],
+			oldUsersOptions: get().newUsersOptions,
+			modalOpen: false,
+			confirmModal: false
+		})
+	},
+	notToConfirmNewUserOptions: () =>
+		set({
+			newUsersOptions: [],
+			modalOpen: false,
+			confirmModal: false
+		})
 }))
 
 export default useAppState

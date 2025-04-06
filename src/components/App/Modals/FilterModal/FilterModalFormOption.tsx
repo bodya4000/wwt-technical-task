@@ -17,10 +17,10 @@ interface Props {
 }
 
 const FilterModalFormOption = ({ opt, control, sectionId }: Props) => {
-	const { usersOptions } = useAppState()
+	const { oldUsersOptions } = useAppState()
 	const inUse = useMemo(
-		() => usersOptions.some(section => section.optionsIds.includes(opt.id)),
-		[usersOptions]
+		() => oldUsersOptions.some(section => section.optionsIds.includes(opt.id)),
+		[oldUsersOptions]
 	)
 	return (
 		<Controller

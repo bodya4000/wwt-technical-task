@@ -2,5 +2,8 @@
 	"filters": "Filters",
 	"filter": "Filter",
 	"apply": "Apply",
-	"clear_filters": "Clear all parameters"
+	"clear_filters": "Clear all parameters",
+	"confirm_filter_text": "Do you want to apply new filter",
+	"use_old": "Use old filter",
+	"apply_new": "Apply new filter"
 }

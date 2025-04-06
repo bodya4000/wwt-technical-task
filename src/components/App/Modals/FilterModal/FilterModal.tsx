@@ -9,10 +9,8 @@ import {
 	ModalOverlay
 } from '@chakra-ui/react'
 
-import { FilterType } from '@api/types/Filter'
-import { SearchRequestFilter } from '@api/types/SearchRequest/SearchRequestFilter'
-
 import useFilterData from '@/hooks/useFilterData'
+import { FormTransformDataService } from '@/services'
 import useAppState from '@/zustand/store'
 
 import { FilterModalBody, FilterModalFooter } from '.'
@@ -31,28 +29,18 @@ export type FilterFormData = {
 export const FilterModal = ({ isOpen, onClose }: Props) => {
 	const { t } = useTranslation('filter')
 	const { data, isLoading } = useFilterData()
-	const { setUserOptions } = useAppState()
-	const { control, handleSubmit } = useForm<FilterFormData>()
+	const { openConfirmModal } = useAppState()
+	const { control, handleSubmit, reset, getValues } = useForm<FilterFormData>()
 
 	const onPress = (data: FilterFormData) => {
-		const transformedData: SearchRequestFilter = Object.entries(data).map(
-			([sectionId, options]) => {
-				const optionsIds: string[] = []
-				for (const option in options) {
-					if (options[option]) {
-						optionsIds.push(option)
-					}
-				}
-				return {
-					id: sectionId,
-					optionsIds,
-					type: FilterType.OPTION
-				}
-			}
-		)
-		setUserOptions(transformedData)
-		onClose()
+		console.log(data)
+
+		const transformedData =
+			FormTransformDataService.transformFormDataToSearchRequestFilter(data)
+
+		openConfirmModal(transformedData)
 	}
+
 	return (
 		<Modal
 			isOpen={isOpen}
@@ -68,7 +56,12 @@ export const FilterModal = ({ isOpen, onClose }: Props) => {
 				minW={['88vw', '100%', '100%']}
 				overflowX="hidden"
 			>
-				<ModalHeader>{t('filter')}</ModalHeader>
+				<ModalHeader
+					fontWeight={'500'}
+					fontSize={'xl'}
+				>
+					{t('filter')}
+				</ModalHeader>
 
 				<ModalCloseButton _focus={{ boxShadow: 'none' }} />
 
@@ -78,7 +71,11 @@ export const FilterModal = ({ isOpen, onClose }: Props) => {
 					isLoading={isLoading}
 				/>
 
-				<FilterModalFooter submit={handleSubmit(onPress)} />
+				<FilterModalFooter
+					reset={reset}
+					getValues={getValues}
+					submit={handleSubmit(onPress)}
+				/>
 			</ModalContent>
 		</Modal>
 	)
